@@ -19,7 +19,7 @@ type storageUploadTask struct {
 }
 
 func (this *storageUploadTask) SendReq(conn net.Conn) error {
-	this.cmd = STORAGE_PROTO_CMD_UPLOAD_FILE
+	this.cmd = StorageProtoCmdUploadFile
 	this.pkgLen = this.fileInfo.fileSize + 15
 
 	if err := this.SendHeader(conn); err != nil {
@@ -100,7 +100,7 @@ type storageDownloadTask struct {
 }
 
 func (this *storageDownloadTask) SendReq(conn net.Conn) error {
-	this.cmd = STORAGE_PROTO_CMD_DOWNLOAD_FILE
+	this.cmd = StorageProtoCmdDownloadFile
 	this.pkgLen = int64(len(this.remoteFilename) + 32)
 
 	if err := this.SendHeader(conn); err != nil {
@@ -163,18 +163,18 @@ func (this *storageDownloadTask) recvFile(conn net.Conn) error {
 
 func (this *storageDownloadTask) recvBuffer(conn net.Conn) error {
 	var (
-		err				error
+		err error
 	)
 	//buffer allocate by user
 	if this.buffer != nil {
 		if int64(len(this.buffer)) < this.pkgLen {
 			return fmt.Errorf("StorageDownloadTask buffer < pkgLen can't recv")
-        }
+		}
 		if err = writeFromConnToBuffer(conn, this.buffer, this.pkgLen); err != nil {
 			return fmt.Errorf("StorageDownloadTask writeFromConnToBuffer %s", err)
-        }
+		}
 		return nil
-    }
+	}
 	writer := new(bytes.Buffer)
 
 	if err = writeFromConn(conn, writer, this.pkgLen); err != nil {
@@ -192,7 +192,7 @@ type storageDeleteTask struct {
 }
 
 func (this *storageDeleteTask) SendReq(conn net.Conn) error {
-	this.cmd = STORAGE_PROTO_CMD_DELETE_FILE
+	this.cmd = StorageProtoCmdDeleteFile
 	this.pkgLen = int64(len(this.remoteFilename) + 16)
 
 	if err := this.SendHeader(conn); err != nil {

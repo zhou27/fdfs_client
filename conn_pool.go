@@ -79,7 +79,7 @@ func (this *connPool) CheckConns() error {
 		next = e.Next()
 		conn := e.Value.(pConn)
 		header := &header{
-			cmd: FDFS_PROTO_CMD_ACTIVE_TEST,
+			cmd: FdfsProtoCmdActiveTest,
 		}
 		if err := header.SendHeader(conn.Conn); err != nil {
 			this.conns.Remove(e)
@@ -91,7 +91,7 @@ func (this *connPool) CheckConns() error {
 			this.count--
 			continue
 		}
-		if header.cmd != TRACKER_PROTO_CMD_RESP || header.status != 0 {
+		if header.cmd != TrackerProtoCmdResp || header.status != 0 {
 			this.conns.Remove(e)
 			this.count--
 			continue

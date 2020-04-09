@@ -10,18 +10,18 @@ import (
 )
 
 const (
-	TRACKER_PROTO_CMD_RESP                                  = 100
-	TRACKER_PROTO_CMD_SERVICE_QUERY_STORE_WITHOUT_GROUP_ONE = 101
-	TRACKER_PROTO_CMD_SERVICE_QUERY_FETCH_ONE               = 102
+	TrackerProtoCmdResp                             = 100
+	TrackerProtoCmdServiceQueryStoreWithoutGroupOne = 101
+	TrackerProtoCmdServiceQueryFetchOne             = 102
 
-	STORAGE_PROTO_CMD_UPLOAD_FILE   = 11
-	STORAGE_PROTO_CMD_DELETE_FILE   = 12
-	STORAGE_PROTO_CMD_DOWNLOAD_FILE = 14
-	FDFS_PROTO_CMD_ACTIVE_TEST      = 111
+	StorageProtoCmdUploadFile   = 11
+	StorageProtoCmdDeleteFile   = 12
+	StorageProtoCmdDownloadFile = 14
+	FdfsProtoCmdActiveTest      = 111
 )
 
 const (
-	FDFS_GROUP_NAME_MAX_LEN = 16
+	FdfsGroupNameMaxLen = 16
 )
 
 type storageInfo struct {

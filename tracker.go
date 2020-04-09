@@ -25,7 +25,7 @@ type trackerTask struct {
 
 func (this *trackerTask) SendReq(conn net.Conn) error {
 	if this.groupName != "" {
-		this.pkgLen = int64(FDFS_GROUP_NAME_MAX_LEN + len(this.remoteFilename))
+		this.pkgLen = int64(FdfsGroupNameMaxLen + len(this.remoteFilename))
 	}
 	if err := this.SendHeader(conn); err != nil {
 		return err
