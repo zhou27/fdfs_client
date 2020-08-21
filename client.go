@@ -36,6 +36,29 @@ func NewClientWithConfig(configName string) (*Client, error) {
 	return client, nil
 }
 
+func NewClient(maxConns int, trackerAddr []string) (*Client, error) {
+	config := &config{}
+	config.trackerAddr = trackerAddr
+	config.maxConns = maxConns
+
+	client := &Client{
+		config:          config,
+		storagePoolLock: &sync.RWMutex{},
+	}
+	client.trackerPools = make(map[string]*connPool)
+	client.storagePools = make(map[string]*connPool)
+
+	for _, addr := range config.trackerAddr {
+		trackerPool, err := newConnPool(addr, config.maxConns)
+		if err != nil {
+			return nil, err
+		}
+		client.trackerPools[addr] = trackerPool
+	}
+
+	return client, nil
+}
+
 func (this *Client) Destory() {
 	if this == nil {
 		return
